@@ -11,9 +11,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/pino": "^5.14.0",
     "typescript": "^3.7.3"
   },
   "dependencies": {
-    "pino": "^5.14.0"
+    "pino": "^5.14.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8"
   }
 }
