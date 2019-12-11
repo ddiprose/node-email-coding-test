@@ -1,8 +1,13 @@
-import { IEmailQuery } from "../types/types";
+import { IEmailQuery, IEmailPayload, IHttpRequester, ILogger } from '../types/types';
 
 export class MailGunQuery implements IEmailQuery {
   
-  async execute(payload: any): Promise<any> {
+  constructor(
+    private _logger: ILogger,
+    private _httpRequester: IHttpRequester
+  ) {}
+
+  async execute(payload: IEmailPayload): Promise<any> {
     return 'foo';
   }
 

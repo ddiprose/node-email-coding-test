@@ -1,0 +1,1 @@
+export const defaultHttpRequestTimeoutMilliseconds: number = 5000;

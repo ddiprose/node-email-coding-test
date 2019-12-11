@@ -1,13 +1,14 @@
-import { LogFn, LevelWithSilent } from "pino";
+import { LogFn, LevelWithSilent } from 'pino';
 
 export interface IEmailQuery {
-  execute(payload): Promise<any>;
+  execute(payload: IEmailPayload): Promise<any>;
 }
 
 export interface IEmailPayload {
   toEmailAddresses: string[];
   ccEmailAddresses: string[];
   bccEmailAddresses: string[];
+  fromEmailAddress: string;
   subject: string;
   body: string;
   isHtml: boolean;
@@ -35,4 +36,12 @@ export interface IRequestOptions {
   json: boolean
   strictSSL?: boolean;
   timeout: number;
+}
+
+// send grid payload
+export interface ISendGridBodyPayload {
+  personalizations: { to: { email: string }[] }[];
+  from: { email: string };
+  subject: string;
+  content: { type: 'text/plain' | 'text/html', value: string; }[];
 }
