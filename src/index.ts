@@ -4,19 +4,18 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const requestId = require('@kasa/koa-request-id');
 
-// load .env file
-require('dotenv').config();
+export const createApp = (options?) => {
+  
+  const app = new Koa()
+    .use(requestId())
+    .use(appAsMiddleWare)
+    .use(errorHandler);
 
-// bootstrap app
-const port = +(process.env.PORT || 3000);
-const app = new Koa();
-app
-  .use(requestId())
-  .use(appAsMiddleWare)
-  .use(errorHandler)
-  .use(bodyParser())
-  .use((ctx, next) => ctx.router.routes()(ctx, next))
-  .use((ctx, next) => ctx.router.allowedMethods()(ctx, next))
-  .listen(port, () => {
-    console.log(`API running on port: ${port}`)
-  });
+  if(!options || !options.isFirebase) {
+    app.use(bodyParser());
+  }
+
+  return app
+    .use((ctx, next) => ctx.router.routes()(ctx, next))
+    .use((ctx, next) => ctx.router.allowedMethods()(ctx, next));
+}

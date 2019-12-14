@@ -8,7 +8,7 @@ export class EmailApi {
   ) {}
 
   sendEmail = async(ctx, next) => {
-    const emailPayload: IEmailPayload = ctx.request.body;
+    const emailPayload: IEmailPayload = ctx.req.body || ctx.request.body;
 
     ctx.body = await this._emailQuery.execute(emailPayload)
       .then(res => {
