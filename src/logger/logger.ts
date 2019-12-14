@@ -1,10 +1,10 @@
-import { default as Pino, LevelWithSilent } from 'pino';
+import { default as Pino } from 'pino';
 import { ILogger, LogLevel } from '../types/types';
 
 export class Logger implements ILogger {
   _logger: Pino.Logger;
 
-  constructor(logLevel: LogLevel) {
+  constructor(logLevel: LogLevel, additionalOptions?: object) {
     const options: Pino.LoggerOptions = {
       serializers: {
         err: Pino.stdSerializers.err,
@@ -15,7 +15,9 @@ export class Logger implements ILogger {
       useLevelLabels: true,
       base: null
     };
-    this._logger = Pino(options);
+    this._logger = typeof additionalOptions !== 'undefined' ?
+      Pino(options).child(additionalOptions) :
+      Pino(options);
   }
 
   debug (obj, ...args) {

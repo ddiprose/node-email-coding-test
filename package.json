@@ -16,7 +16,11 @@
     "typescript": "^3.7.3"
   },
   "dependencies": {
+    "@kasa/koa-request-id": "^2.0.1",
     "dotenv": "^8.2.0",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
     "pino": "^5.14.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8"

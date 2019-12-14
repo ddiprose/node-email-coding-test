@@ -1,34 +1,22 @@
-import { SendGridQuery } from './query/sendgrid-query';
-import { IEmailQuery, IEmailPayload, ILogger, IHttpRequester } from './types/types';
-import { Logger } from './logger/logger';
-import { HttpRequester } from './libs/requester';
+import { appAsMiddleWare } from './app';
+import { errorHandler } from './middleware/error-handler';
+const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
+const requestId = require('@kasa/koa-request-id');
 
-(async () => {
+// load .env file
+require('dotenv').config();
 
-  // load .env file
-  require('dotenv').config();
-
-  // create dependencies
-  const _logger: ILogger = new Logger('debug');
-  const _httpRequester: IHttpRequester = new HttpRequester(_logger);
-
-  const payload: IEmailPayload = {
-    toEmailAddresses: [],
-    ccEmailAddresses: [],
-    bccEmailAddresses: [],
-    fromEmailAddress: '',
-    body: 'hello world',
-    subject: 'test email',
-    isHtml: false
-  };
-
-  const query: IEmailQuery = new SendGridQuery(_logger, _httpRequester);
-  return await query.execute(payload)
-    .then(res => {
-      _logger.info('Successfully sent email')
-    }).catch(err => {
-      _logger.error({ err }, 'Failed to send email');
-      process.exit(1);
-    });
-
-})();
+// bootstrap app
+const port = +(process.env.PORT || 3000);
+const app = new Koa();
+app
+  .use(requestId())
+  .use(appAsMiddleWare)
+  .use(errorHandler)
+  .use(bodyParser())
+  .use((ctx, next) => ctx.router.routes()(ctx, next))
+  .use((ctx, next) => ctx.router.allowedMethods()(ctx, next))
+  .listen(port, () => {
+    console.log(`API running on port: ${port}`)
+  });

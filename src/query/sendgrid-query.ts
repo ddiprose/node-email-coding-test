@@ -34,5 +34,4 @@ export class SendGridQuery implements IEmailQuery {
       return res;
     });
   }
-
 }

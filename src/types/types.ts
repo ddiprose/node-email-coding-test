@@ -1,5 +1,11 @@
 import { LogFn, LevelWithSilent } from 'pino';
 
+export interface IRoute {
+  type: 'get' | 'post' | 'put' | 'delete';
+  uri: string;
+  handler: (ctx, next) => Promise<any>; 
+}
+
 export interface IEmailQuery {
   execute(payload: IEmailPayload): Promise<any>;
 }
