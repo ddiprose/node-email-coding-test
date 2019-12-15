@@ -5,11 +5,11 @@ export class EmailRoutes {
 
   constructor(
     private _logger: ILogger,
-    private _emailQuery: IEmailQuery) {
+    private _emailQueryImplementations: IEmailQuery[]) {
   }
 
   getRoutes(): IRoute[] {
-    const emailApi = new EmailApi(this._logger, this._emailQuery);
+    const emailApi = new EmailApi(this._logger, this._emailQueryImplementations);
     return [{
       type: 'post',
       uri: '/email/send',

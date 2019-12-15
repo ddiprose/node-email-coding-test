@@ -8,7 +8,9 @@ export class MailGunQuery implements IEmailQuery {
   ) {}
 
   async execute(payload: IEmailPayload): Promise<any> {
-    return 'foo';
+    return {
+      message: `We didn't actually send an email since SendGrid timed out. This is the failover implementation response.`
+    };
   }
 
 }

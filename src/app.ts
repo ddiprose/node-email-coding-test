@@ -4,6 +4,7 @@ import { HttpRequester } from './libs/requester';
 import { SendGridQuery } from './query/sendgrid-query';
 import { EmailRoutes } from './routes/email-routes';
 import { Router } from './router/router';
+import { MailGunQuery } from './query/mailgun-query';
 
 export async function appAsMiddleWare(ctx, next) {
   // create dependencies
@@ -14,7 +15,11 @@ export async function appAsMiddleWare(ctx, next) {
 
   // get routes
   const sendGridQuery: IEmailQuery = new SendGridQuery(_logger, _httpRequester);
-  const emailRoutes = new EmailRoutes(_logger, sendGridQuery);
+  const mailGunQuery: IEmailQuery = new MailGunQuery(_logger, _httpRequester);
+  const emailRoutes = new EmailRoutes(_logger, [
+    sendGridQuery,
+    mailGunQuery
+  ]);
 
   // create koa router and bootstrap
   const router = new Router(emailRoutes.getRoutes());

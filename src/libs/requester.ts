@@ -15,6 +15,7 @@ export class HttpRequester implements IHttpRequester {
     return await request(options).catch(err => {
       if(err.error && (err.error.code === 'ESOCKETTIMEDOUT' || err.error.code === 'ETIMEDOUT')) {
         this._logger.debug(`Failed to call ${options.method} ${options.uri} as elapsed time exceeded ${options.timeout} milliseconds`);
+        err.timeout = true;
       }
       throw err;
     });

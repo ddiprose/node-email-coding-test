@@ -26,6 +26,8 @@ https://us-central1-node-email-coding-test.cloudfunctions.net/http/email/send \
 }'
 ```
 
+Note: if it says that it was successful, when checking your email make sure to check your junk email folder (in case your email provider think's it's not from the recipient or is spam).
+
 ## Description
 
 The demo is hosted on firebase as a serverless function. The code is written as a koa app, which firebase is able to use as a serverless app as koa exposes a callback method that implements a node request/reponse handler for itself.
@@ -78,5 +80,6 @@ Then run using `firebase serve`. After this, you can post your request to:
 
 - Add a swagger ui
 - Add tests (e.g. using `ts-jest`)
+- Add better validation (i.e. should require at least one of to/cc/bcc email addresses)
 - Implement failover (need to determine which failures should constitute SendGrid being down/innacessible vs a bad request)
 
