@@ -5,6 +5,7 @@
   "main": "dist/index-firebase.js",
   "scripts": {
     "build": "tsc",
+    "start": "node dist/index-node.js | node node_modules/pino-pretty/bin.js -c -t",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -29,5 +30,6 @@
     "pino": "^5.14.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8"
-  }
+  },
+  "private": true
 }
