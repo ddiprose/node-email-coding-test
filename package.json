@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index-node.js | node node_modules/pino-pretty/bin.js -c -t",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config=jest.config.js"
   },
   "engines": {
     "node": "10"
@@ -15,8 +15,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^24.0.23",
     "@types/pino": "^5.14.0",
+    "jest": "^24.9.0",
     "pino-pretty": "^3.5.0",
+    "ts-jest": "^24.2.0",
     "typescript": "^3.7.3"
   },
   "dependencies": {
